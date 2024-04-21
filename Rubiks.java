@@ -1,48 +1,33 @@
 //headstrong lets go into this
+import peasy.*;
+PeasyCam cam;
+import java.lang.Math;
 Cube rub;
-float angleX = 0;
-float angleY = 0;
-float camDist = 500;
-float camX = 0;
-float camY = 0;
-float camZ = camDist; 
-float prevMouseX, prevMouseY;
+boolean canFlip = true;
 
-void setup(){
+void setup() {
   size(800, 600, P3D);
-  prevMouseX = mouseX;
-  prevMouseY = mouseY;
+  cam = new PeasyCam(this, 400);
   rub = new Cube(3, 40);
 }
 
-
-
-
-void draw(){
-  background(220);
-  //sphere(20);
-  //box(28);
-  camera(camX, camY, camZ, // Camera position (center of the screen, camZ)
-         0, 0, 0,   // Look at point (center of the screen, 0)
-         0, 1, 0);  
-  if (mousePressed && mouseButton == LEFT) {
-    float dx = mouseX - prevMouseX;
-    float dy = mouseY - prevMouseY;
-    angleX += radians(dy * 0.5); // Adjust rotation based on vertical mouse movement
-    angleY += radians(dx * 0.5); // Adjust rotation based on horizontal mouse movement
-  }
-  prevMouseX = mouseX;
-  prevMouseY = mouseY;
-  
-  camX = sin(angleY) * camDist;
-  camY = -sin(angleX) * camDist;
-  camZ = cos(angleY) * camDist;
-  
-  rotateX(angleX);
-  rotateY(angleY);
-  
-  //translate(width/2, height/2, 0); // Move origin to center of the canvas
-
-  // Rotate the box based on time
+void draw() {
+  background(220); 
   rub.drawPieces();
+  if(keyPressed && key == 106 && canFlip){
+    System.out.println("Flipping corners!");
+    rub.turnCorners(0, 0, true);
+    canFlip = false;
+  }else if(keyPressed && key == 107){
+    canFlip = true;
+  }else if(keyPressed && key == 108 && canFlip){
+    rub.turnCorners(0,0,false);
+    canFlip = false;
+  }else if(keyPressed && key == 109 && canFlip){
+    rub.makeTurn(0, 0, true);
+    canFlip = false;
+  }else if(keyPressed && key == 110 && canFlip){
+    rub.turnEdges(0, 0, true);
+    canFlip = false;
+  }
 }
