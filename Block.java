@@ -60,22 +60,13 @@ class Block{
   }
 
   public void flipCornerFaces(int por){
+    int tempColor;
     int a;
     int b; //a, b represent the two axises that are gonna be changed aka whatever por is not. if por == 0, which means x is plane of rotation, y,z will change for a corner.
     if(por == 0){
       a = 1;
       b = 2;
-    } else if(por ==1){
-      a = 0;
-      b = 2;
       
-      
-    } else{
-      a = 0;
-      b = 1;
-    }
-    //we flip, change second
-        int tempColor;
         //we switch the colors in faceColor, change second face int value * -1
         tempColor = faceColor[a];
         faceColor[a] = faceColor[b];
@@ -84,6 +75,33 @@ class Block{
         int tempFace = faces[a] * -1;
         faces[a] = faces[b];
         faces[b] = tempFace;
+      
+    } else if(por ==1){
+      a = 0;
+      b = 2;
+      
+      tempColor = faceColor[a];
+      faceColor[a] = faceColor[b];
+      faceColor[b] = tempColor;
+      
+      int tempFace = faces[b] * -1;
+      faces[b] = faces[a];
+      faces[a] = tempFace;
+      
+    } else{
+      a = 0;
+      b = 1;
+      tempColor = faceColor[a];
+      faceColor[a] = faceColor[b];
+      faceColor[b] = tempColor;
+      
+      int tempFace = faces[b];
+      faces[b] = -1 * faces[a];
+      faces[a] = tempFace;
+      
+    }
+    //we flip, change second
+        
     
   }
 
