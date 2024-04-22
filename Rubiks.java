@@ -10,24 +10,22 @@ void setup() {
   cam = new PeasyCam(this, 400);
   rub = new Cube(3, 40);
 }
-
+//when we are calling u, r, l etc, some of them will have to "flip" the call, our makeTurn's clockwise is correct for d, not for u.
 void draw() {
   background(220); 
   rub.drawPieces();
   if(keyPressed && key == 106 && canFlip){
-    System.out.println("Flipping corners!");
-    rub.turnCorners(0, 0, true);
+    rub.makeTurn(0, 0, true);
     canFlip = false;
   }else if(keyPressed && key == 107){
     canFlip = true;
   }else if(keyPressed && key == 108 && canFlip){
-    rub.turnCorners(0,0,false);
+    rub.makeTurn(1, 0, true);
     canFlip = false;
   }else if(keyPressed && key == 109 && canFlip){
-    rub.makeTurn(0, 0, true);
+    
     canFlip = false;
   }else if(keyPressed && key == 110 && canFlip){
-    rub.turnEdges(0, 0, true);
-    canFlip = false;
+    
   }
 }
