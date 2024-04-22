@@ -14,18 +14,34 @@ void setup() {
 void draw() {
   background(220); 
   rub.drawPieces();
-  if(keyPressed && key == 106 && canFlip){
-    rub.makeTurn(0, 0, true);
+  if(keyPressed && key == 98 && canFlip){
+    //b
+    rub.makeTurn(2, 0, true); // BLUE
     canFlip = false;
-  }else if(keyPressed && key == 107){
+  }else if(keyPressed && key == 'g' && canFlip){
+    //f
+    rub.makeTurn(2, 2, true);  //GREEN
+    canFlip = false;
+  }else if(keyPressed && key == 'o' && canFlip){
+    //l
+    rub.makeTurn(0, 2, true); //ORANGE
+    canFlip = false;
+  }else if(keyPressed && key == 114 && canFlip){
+    //r
+    rub.makeTurn(0, 0, true); //RED
+    canFlip = false;
+  }else if(keyPressed && key == 'w' && canFlip){
+    //u
+    rub.makeTurn(1, 2, true); //WHITE
+    canFlip = false;
+  }else if(keyPressed && key == 'y' && canFlip){
+    //d
+    rub.makeTurn(1, 0, true); //YELLOW
+    canFlip = false;
+  }else if(keyPressed && key == 'z'){
+    rub.scramble();
+  }
+  if(keyPressed && key == 'k'){
     canFlip = true;
-  }else if(keyPressed && key == 108 && canFlip){
-    rub.makeTurn(1, 0, true);
-    canFlip = false;
-  }else if(keyPressed && key == 109 && canFlip){
-    
-    canFlip = false;
-  }else if(keyPressed && key == 110 && canFlip){
-    
   }
 }
