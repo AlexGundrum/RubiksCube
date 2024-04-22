@@ -30,19 +30,13 @@ class Cube {
     Block tempCorner = null;
     if (planeBeingTurned == 0) {
       //x plane being turned - this refers to normal vector of it.,
+      tempCorner = arr[planeValueToTurn][0][0];
       if (clockwise) {
-        
-
-        //manually switching the four corners, I am fine with this.
-        tempCorner = arr[planeValueToTurn][0][0]; //saving TL corner
-        
         arr[planeValueToTurn][0][0] = arr[planeValueToTurn][dim-1][0];//TL corner correct
-        
         arr[planeValueToTurn][dim-1][0] = arr[planeValueToTurn][dim-1][dim-1]; //BL corner correct
         arr[planeValueToTurn][dim-1][dim-1] = arr[planeValueToTurn][0][dim-1]; // BR corner correct
         arr[planeValueToTurn][0][dim-1] = tempCorner; // TR corner correct
       }else{
-        tempCorner = arr[planeValueToTurn][0][0];
         arr[planeValueToTurn][0][0] = arr[planeValueToTurn][0][dim-1];
         arr[planeValueToTurn][0][dim-1] = arr[planeValueToTurn][dim-1][dim-1];
         arr[planeValueToTurn][dim-1][dim-1] = arr[planeValueToTurn][dim-1][0];
@@ -55,6 +49,30 @@ class Cube {
       arr[planeValueToTurn][0][dim-1].flipCornerFaces(planeBeingTurned);
       
       
+    }else if(planeBeingTurned == 1){
+      tempCorner = arr[0][planeValueToTurn][0];
+      if(clockwise){
+        arr[0][planeValueToTurn][0] = arr[0][planeValueToTurn][dim - 1];
+        arr[0][planeValueToTurn][dim - 1] = arr[dim-1][planeValueToTurn][dim-1];
+        arr[dim-1][planeValueToTurn][dim-1] = arr[dim-1][planeValueToTurn][0];
+        arr[dim-1][planeValueToTurn][0] = tempCorner;
+      }else{
+        arr[0][planeValueToTurn][0] = arr[dim-1][planeValueToTurn][0];// TL correct
+        arr[dim-1][planeValueToTurn][0] = arr[dim-1][planeValueToTurn][dim-1]; //TR correct
+        arr[dim-1][planeValueToTurn][dim-1] = arr[dim-1][planeValueToTurn][0]; //BR correct
+        arr[0][planeValueToTurn][dim-1] = tempCorner; // BL correct
+      }
+      arr[0][planeValueToTurn][0].flipCornerFaces(planeBeingTurned);
+      arr[dim-1][planeValueToTurn][0].flipCornerFaces(planeBeingTurned);
+      arr[dim-1][planeValueToTurn][dim-1].flipCornerFaces(planeBeingTurned);
+      arr[dim-1][planeValueToTurn][0].flipCornerFaces(planeBeingTurned);
+      
+    }else if(planeBeingTurned == 2){
+      if(clockwise){
+        
+      }else{
+        
+      }
     }
     
     
@@ -67,52 +85,118 @@ class Cube {
   void turnEdges(int planeBeingTurned, int planeValueToTurn, boolean clockwise){
     if(planeBeingTurned == 0){
       if(clockwise){
-        //copy top dim - 2
-        Block[] temp = new Block[dim-2];
+        
+        Block[] temp = new Block[dim-2]; //copy top dim - 2
         //copying top row
         int arrCount = 0;
         for(int i = 1; i < dim - 1; i++){
           temp[arrCount] = arr[planeValueToTurn][0][i];
-          //System.out.println("piece " + 0 + ", " + i);
           arrCount++;
         }
+        
         //top row is copied, lets go back to left horizontal to steal
         int countUp = 1;
         for(int i = dim - 2; i >= 1 ; i--){
           arr[planeValueToTurn][0][countUp] = arr[planeValueToTurn][i][0];
-          
-          System.out.println("piece " + 0 + ", " + countUp + " copied thing below, then flippedEdge");
-          System.out.println("piece " + i + ", " + 0);
           arr[planeValueToTurn][0][countUp].flipEdgeFaces(planeBeingTurned, clockwise);
           countUp++;
         }
+        
         //our top row is now correct, lets steal bottom row to make left column correct
-        //countUp = 1;
         for(int z = 1; z < dim - 1; z++){
           arr[planeValueToTurn][z][0] = arr[planeValueToTurn][dim-1][z];
-          System.out.println("92piece " + z + ", " + 0 + "Copied thing below, then flipped");
-          System.out.println("93piece " + (dim-1) + ", " + z);
-          arr[planeValueToTurn][0][z].flipEdgeFaces(planeBeingTurned, clockwise);
+          arr[planeValueToTurn][z][0].flipEdgeFaces(planeBeingTurned, clockwise);
         }
-        //left column, top row now correct. Lets steal right column onto bottom row. 
         
+        //left column, top row now correct. Lets steal right column onto bottom row. 
         for(int z = 1; z < dim - 1; z++){
           arr[planeValueToTurn][dim-1][z] = arr[planeValueToTurn][(dim - 1) - z][dim-1];
-          System.out.println("100piece " + (dim-1) + ", " + z + "Copied below, then flipped");
-          System.out.println("101piece " + ((dim - 1) - z) + ", " + (dim - 1));
           arr[planeValueToTurn][dim-1][z].flipEdgeFaces(planeBeingTurned, clockwise);
         }
+        
         //bottom row now correct, copy temparray to right column
         for(int y = 1; y < dim - 1; y++){
           arr[planeValueToTurn][y][(dim-1)] = temp[y-1];
-          System.out.println("107piece " + y + ", " + (dim-1) + "Stole OG, then flipped.");
-          //System.out.println("piece " + ((dim - 1) - z) + ", " + (dim - 1));
-          arr[planeValueToTurn][dim-1][y].flipEdgeFaces(planeBeingTurned, clockwise);
+          arr[planeValueToTurn][y][(dim-1)].flipEdgeFaces(planeBeingTurned, clockwise);
         }
-        
-        
       }else{
          
+      }
+    }else if(planeBeingTurned == 1){
+      if(clockwise){
+        Block[] temp = new Block[dim-2]; //copy top dim - 2
+        //copying top row
+        int arrCount = 0;
+        for(int i = 1; i < dim - 1; i++){
+          temp[arrCount] = arr[i][planeValueToTurn][0];
+          arrCount++;
+        }
+        
+        //top row is copied, lets go back to left horizontal to steal
+        int countUp = 1;
+        for(int i = dim - 2; i >= 1 ; i--){
+          arr[countUp][planeValueToTurn][0] = arr[0][planeValueToTurn][i];
+          arr[countUp][planeValueToTurn][0].flipEdgeFaces(planeBeingTurned, clockwise);
+          countUp++;
+        }
+        
+        //our top row is now correct, lets steal bottom row to make left column correct
+        for(int z = 1; z < dim - 1; z++){
+          arr[0][planeValueToTurn][z] = arr[z][planeValueToTurn][dim-1];
+          arr[0][planeValueToTurn][z].flipEdgeFaces(planeBeingTurned, clockwise);
+        }
+        
+        //left column, top row now correct. Lets steal right column onto bottom row. 
+        for(int z = 1; z < dim - 1; z++){
+          arr[z][planeValueToTurn][dim-1] = arr[dim-1][planeValueToTurn][(dim - 1) - z];
+          arr[z][planeValueToTurn][dim-1].flipEdgeFaces(planeBeingTurned, clockwise);
+        }
+        
+        //bottom row now correct, copy temparray to right column
+        for(int z = 1; z < dim - 1; z++){
+          arr[(dim-1)][planeValueToTurn][z] = temp[z-1];
+          arr[(dim-1)][planeValueToTurn][z].flipEdgeFaces(planeBeingTurned, clockwise);
+        }
+      }else{
+        
+      }
+    }else if(planeBeingTurned == 2){
+      if(clockwise){
+        Block[] temp = new Block[dim-2]; //copy top dim - 2
+        //copying top row
+        int arrCount = 0;
+        for(int i = 1; i < dim - 1; i++){
+          temp[arrCount] = arr[0][i][planeValueToTurn];
+          arrCount++;
+        }
+        
+        //top row is copied, lets go back to left horizontal to steal
+        int countUp = 1;
+        for(int i = dim - 2; i >= 1 ; i--){
+          arr[0][countUp][planeValueToTurn] = arr[i][0][planeValueToTurn];
+          arr[0][countUp][planeValueToTurn].flipEdgeFaces(planeBeingTurned, clockwise);
+          countUp++;
+        }
+        
+        //our top row is now correct, lets steal bottom row to make left column correct
+        for(int x = 1; x < dim - 1; x++){
+          arr[x][0][planeValueToTurn] = arr[dim-1][x][planeValueToTurn];
+          arr[x][0][planeValueToTurn].flipEdgeFaces(planeBeingTurned, clockwise);
+        }
+        
+        //left column, top row now correct. Lets steal right column onto bottom row. 
+        for(int y = 1; y < dim - 1; y++){
+          arr[dim-1][y][planeValueToTurn] = arr[(dim - 1) - y][dim-1][planeValueToTurn];
+          arr[dim-1][y][planeValueToTurn].flipEdgeFaces(planeBeingTurned, clockwise);
+        }
+        
+        //bottom row now correct, copy temparray to right column
+        for(int z = 1; z < dim - 1; z++){
+          arr[z][(dim-1)][planeValueToTurn] = temp[z-1];
+          arr[z][(dim-1)][planeValueToTurn].flipEdgeFaces(planeBeingTurned, clockwise);
+        }
+      }else{
+        
       }
     }
   }
