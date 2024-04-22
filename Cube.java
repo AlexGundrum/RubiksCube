@@ -1,3 +1,4 @@
+import java.util.Random;
 class Cube {
 
   public int dim; // determines what N is in NxNxN cube
@@ -26,6 +27,21 @@ class Cube {
       }
     }
   }
+  
+  void scramble(){
+    Random rand = new Random();
+    int curRandom1;
+    int curRandom2;
+    for(int i = 0; i < 30; i++){
+      curRandom1 = rand.nextInt(3);
+      curRandom2 = rand.nextInt(2);
+      if(curRandom2 == 1){
+        curRandom2 = 2;
+      }
+      makeTurn(curRandom1, curRandom2 , true);
+    }
+  }
+  
   void turnCorners(int planeBeingTurned, int planeValueToTurn, boolean clockwise) {
     Block tempCorner = null;
     if (planeBeingTurned == 0) {
@@ -65,14 +81,26 @@ class Cube {
       arr[0][planeValueToTurn][0].flipCornerFaces(planeBeingTurned);
       arr[dim-1][planeValueToTurn][0].flipCornerFaces(planeBeingTurned);
       arr[dim-1][planeValueToTurn][dim-1].flipCornerFaces(planeBeingTurned);
-      arr[dim-1][planeValueToTurn][0].flipCornerFaces(planeBeingTurned);
+      arr[0][planeValueToTurn][dim-1].flipCornerFaces(planeBeingTurned);
       
     }else if(planeBeingTurned == 2){
+      tempCorner = arr[0][0][planeValueToTurn];
       if(clockwise){
-        
+        arr[0][0][planeValueToTurn] = arr[dim - 1][0][planeValueToTurn];
+        arr[dim -1 ][0][planeValueToTurn] = arr[dim - 1][dim - 1][planeValueToTurn];
+        arr[dim - 1][dim - 1][planeValueToTurn] = arr[0][dim - 1][planeValueToTurn];
+        arr[0][dim - 1][planeValueToTurn] = tempCorner;
       }else{
-        
+        arr[0][0][planeValueToTurn] = arr[0][dim - 1][planeValueToTurn];
+        arr[0][dim - 1][planeValueToTurn] = arr[dim - 1][dim - 1][planeValueToTurn];
+        arr[dim - 1][dim - 1][planeValueToTurn] = arr[dim - 1][0][planeValueToTurn];
+        arr[dim - 1][0][planeValueToTurn] = tempCorner;
       }
+      arr[0][0][planeValueToTurn].flipCornerFaces(planeBeingTurned);
+      arr[0][dim - 1][planeValueToTurn].flipCornerFaces(planeBeingTurned);
+      arr[dim - 1][dim - 1][planeValueToTurn].flipCornerFaces(planeBeingTurned);
+      arr[dim - 1][0][planeValueToTurn].flipCornerFaces(planeBeingTurned);
+      
     }
     
     
