@@ -68,6 +68,8 @@ class Block{
     } else if(por ==1){
       a = 0;
       b = 2;
+      
+      
     } else{
       a = 0;
       b = 1;
@@ -91,35 +93,51 @@ class Block{
       if(clockwise){
         if(faces[2] != 0){
           //when we are sitting at a z, the sign doesn't change. 
-          System.out.println("before flip, faces[2] = " + faces[2] + " color is: " + faceColor[2]);
-          System.out.println("before flip, faces[1] = " + faces[1] + " color is: " + faceColor[1]);
           faces[1]= faces[2];
           faces[2] = 0;
           faceColor[1] = faceColor[2];
           faceColor[2] = -1;
-          System.out.println("after flip, faces[2] = " + faces[2] + " color is: " + faceColor[2]);
-          System.out.println("after flip, faces[1] = " + faces[1] + " color is: " + faceColor[1]);
-          System.out.println("/-/-/-/-/-/-/-/-/-/-/-/-/");
-          //System.out.println("Flip from z -> y");
         }else{
-          System.out.println("before flip2, faces[2] = " + faces[2] + " color is: " + faceColor[2]);
-          System.out.println("before flip2, faces[1] = " + faces[1] + " color is: " + faceColor[1]);
           faces[2] = -1 * faces[1];
           faces[1] = 0;
           faceColor[2] = faceColor[1];
           faceColor[1] = -1;
-          //System.out.println("Flip from y -> z");
-          System.out.println("after flip, faces[2] = " + faces[2] + " color is: " + faceColor[2]);
-          System.out.println("after flip, faces[1] = " + faces[1] + " color is: " + faceColor[1]);
-          System.out.println("/-/-/-/-/-/-/-/-/-/-/-/-/");
         }
       }
     } else if(por ==1){
-     
-    } else{
-     
+     if(clockwise){
+        if(faces[2] != 0){
+          //when we are sitting at a z, the sign does change. 
+          faces[0] = -1 * faces[2];
+          faces[2] = 0;
+          faceColor[0] =  faceColor[2];
+          faceColor[2] = -1;
+        }else{
+          faces[2] = faces[0];
+          faces[0] = 0;
+          faceColor[2] = faceColor[0];
+          faceColor[0] = -1;
+        }
+    } 
+  }else{
+     if(clockwise){
+        if(faces[1] != 0){
+          //when we are sitting at a y, the sign doesnt change. 
+          faces[0] = faces[1];
+          faces[1] = 0;
+          faceColor[0] =  faceColor[1];
+          faceColor[1] = -1;
+        }else{
+          //face is pointing toward an x, sign does change
+          faces[1] = -1 * faces[0];
+          faces[0] = 0;
+          faceColor[1] = faceColor[0];
+          faceColor[0] = -1;
+        }
     }
   }
+}
+
   public void drawSelf(int x, int y, int z){
     fill(255);
     stroke(0);
@@ -189,30 +207,7 @@ class Block{
     vertex(r, -r, r);
     endShape(CLOSE);
     }
-    //System.out.println("" + x + "," + y + "," + z + " is at: " + (x * len - offset) + "," + (y * len - offset) + "," + (z * len - offset));
-    //box(len);
     popMatrix();
   }
 
 }
-
-
-
-/*
-
-if(x == 2 && y ==2 && z == 2){
-      col = Clr.Red;
-    }
-    switch (col){
-      case White:
-        fill(colors[0][0], colors[0][1], colors[0][2]);
-        break;
-      case Red:
-      fill(colors[2][0], colors[2][1], colors[2][2]);
-        break;
-      default:
-        len = len;
-    }
-
-
-*/
